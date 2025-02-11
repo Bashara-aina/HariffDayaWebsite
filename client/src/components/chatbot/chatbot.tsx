@@ -42,7 +42,7 @@ export default function Chatbot() {
 
   const handleSend = () => {
     if (!input.trim()) return;
-    
+
     setMessages((prev) => [...prev, { role: "user", content: input }]);
     chatMutation.mutate(input);
     setInput("");
@@ -52,18 +52,20 @@ export default function Chatbot() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
-          className="fixed bottom-4 right-4 h-12 w-12 rounded-full"
+          id="main-chatbot"
+          className="fixed bottom-4 right-4 h-12 w-12 rounded-full shadow-lg"
           size="icon"
+          onClick={() => setIsOpen(true)}
         >
           <MessageCircle className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      
+
       <SheetContent className="w-[400px] sm:w-[540px]">
         <SheetHeader>
           <SheetTitle>How can we help you?</SheetTitle>
         </SheetHeader>
-        
+
         <div className="flex flex-col h-[calc(100vh-200px)]">
           <div className="flex-grow overflow-y-auto p-4 space-y-4">
             {messages.map((message, i) => (
@@ -85,7 +87,7 @@ export default function Chatbot() {
               </div>
             ))}
           </div>
-          
+
           <div className="p-4 border-t flex gap-2">
             <Textarea
               value={input}
