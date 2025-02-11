@@ -14,7 +14,7 @@ Please format responses in a clear, professional manner.`;
 export async function getChatResponse(messages: Array<{ role: "user" | "assistant" | "system"; content: string }>) {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
+      model: "gpt-4-1106-preview",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         ...messages.map(msg => ({
@@ -29,6 +29,12 @@ export async function getChatResponse(messages: Array<{ role: "user" | "assistan
     return response.choices[0].message.content;
   } catch (error) {
     console.error("OpenAI API error:", error);
-    throw new Error("Failed to get chat response");
+    if (error.status === 401) {
+      throw new Error("Invalid API key. Please check your OpenAI API key configuration.");
+    } else if (error.status === 429) {
+      throw new Error("Rate limit exceeded. Please try again later.");
+    } else {
+      throw new Error("Failed to get chat response: " + error.message);
+    }
   }
 }
