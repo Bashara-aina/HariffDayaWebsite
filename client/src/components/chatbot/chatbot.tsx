@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { nanoid } from "nanoid";
+import { useToast } from "@/hooks/use-toast";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
 };
 
-export default function Chatbot() {
+export type ChatbotRef = {
+  handleSend: (message: string) => void;
+};
+
+const Chatbot = forwardRef<ChatbotRef>((_, ref) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const sessionId = useState(nanoid())[0];
+  const { toast } = useToast();
 
   const chatMutation = useMutation({
     mutationFn: async (message: string) => {
@@ -27,18 +33,29 @@ export default function Chatbot() {
     onSuccess: (data) => {
       setMessages((prev) => [
         ...prev,
+        { role: "user", content: input },
         { role: "assistant", content: data.response },
       ]);
     },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Chat error:", error);
+    },
   });
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-
-    setMessages((prev) => [...prev, { role: "user", content: input }]);
-    chatMutation.mutate(input);
+  const handleSend = (message: string = input) => {
+    if (!message.trim()) return;
+    chatMutation.mutate(message);
     setInput("");
   };
+
+  useImperativeHandle(ref, () => ({
+    handleSend,
+  }));
 
   return (
     <div className="max-w-3xl mx-auto mb-24 bg-white rounded-lg shadow-lg border">
@@ -99,7 +116,7 @@ export default function Chatbot() {
             />
             <Button
               size="icon"
-              onClick={handleSend}
+              onClick={() => handleSend()}
               disabled={chatMutation.isPending || !input.trim()}
               className="h-[80px] w-[80px]"
             >
@@ -110,4 +127,8 @@ export default function Chatbot() {
       </div>
     </div>
   );
-}
+});
+
+Chatbot.displayName = "Chatbot";
+
+export default Chatbot;
