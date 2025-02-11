@@ -23,23 +23,25 @@ const predefinedQuestions = [
   }
 ];
 
-export default function PreQuestionsChatbot() {
+type PreQuestionsChatbotProps = {
+  onAskQuestion?: (question: string) => void;
+};
+
+export default function PreQuestionsChatbot({ onAskQuestion }: PreQuestionsChatbotProps) {
   const [isOpen, setIsOpen] = useState(true);
   const [customQuestion, setCustomQuestion] = useState("");
 
   if (!isOpen) return null;
 
   const handleAskQuestion = (question: string) => {
-    const mainChatbot = document.getElementById('main-chatbot');
-    if (mainChatbot) {
-      (mainChatbot as HTMLButtonElement).click();
-      // The actual question handling will be done in the main chatbot component
+    if (onAskQuestion) {
+      onAskQuestion(question);
     }
     setCustomQuestion("");
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 mb-24">
+    <div className="max-w-3xl mx-auto px-4 mb-12">
       <Card className="shadow-lg border-gray-200">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
