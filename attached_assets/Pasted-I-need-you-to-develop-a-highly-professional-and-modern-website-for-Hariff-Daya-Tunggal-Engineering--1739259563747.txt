@@ -1,0 +1,52 @@
+I need you to develop a highly professional and modern website for Hariff Daya Tunggal Engineering (Hariff DTE), a leading technology company in power systems, digital transformation, and defense solutions. The website should be visually appealing, well-structured, and optimized for large-scale corporate clients. It must also integrate an AI-powered chatbot to assist with customer inquiries regarding product knowledge, technical specifications, and service offerings.
+
+Key Website Features:
+1. Homepage
+A sleek and corporate-style design showcasing the company's core areas: Power Systems, Digital Transformation, and Industrial IoT.
+A hero section with a powerful tagline like:
+"Innovating Indonesia’s Future with Cutting-Edge Technology".
+Call-to-Action (CTA):
+"Request a Consultation"
+"Explore Our Solutions"
+A floating AI chatbot that instantly answers FAQs about the company’s products.
+2. AI Chatbot Features
+Can answer product-related questions, including:
+What is the Network Management System (NMS)?
+How does the Solar Panel System work?
+What are the specifications for your UPS solutions?
+Provides technical documentation links or PDF downloads when requested.
+Uses natural language processing (NLP) to understand different question formats.
+Can direct users to customer support or sales representatives when needed.
+3. Product & Solutions Pages
+Well-organized sections for:
+Power Systems (Solar Panels, UPS, VRLA Batteries)
+Digital Transformation (NMS, IoT Gateways, Monitoring Systems)
+Defense & Environmental Solutions
+Each product page should have:
+A detailed description
+Technical specifications
+Industries served
+Customer testimonials
+A “Request Information” button
+4. Company Profile & History
+A professional About Us page with:
+Company mission & vision
+Core values: Technology & Innovation, Spirit of Locals, Service Excellence
+Achievements and certifications (e.g., Telkomsel Certification)
+Clients and business partners
+5. Contact & Support
+Inquiry forms for potential customers.
+Support center for post-sale assistance.
+Email & phone details displayed prominently.
+Technology Stack:
+Frontend: Next.js / React.js for a fast and interactive UI.
+Backend: Node.js / Express.js for handling requests.
+Database: PostgreSQL or MongoDB for storing customer inquiries and chatbot interactions.
+AI Chatbot: OpenAI GPT-based API or Dialogflow for intelligent responses. but prioritize the free version
+Styling: Tailwind CSS for a clean and modern design.
+Target Audience:
+Large enterprises looking for reliable power and digital transformation solutions.
+Government and defense agencies in need of secure and high-tech monitoring systems.
+Industrial clients requiring custom IoT and energy solutions.
+Key Outcome:
+A professional and AI-powered website that enhances customer engagement, improves information accessibility, and helps Hariff DTE attract large-scale clients.
