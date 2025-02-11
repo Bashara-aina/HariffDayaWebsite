@@ -53,7 +53,7 @@ export default function Chatbot() {
       <SheetTrigger asChild>
         <Button
           id="main-chatbot"
-          className="fixed bottom-4 right-4 h-12 w-12 rounded-full shadow-lg"
+          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg"
           size="icon"
           onClick={() => setIsOpen(true)}
         >
@@ -61,13 +61,21 @@ export default function Chatbot() {
         </Button>
       </SheetTrigger>
 
-      <SheetContent className="w-[400px] sm:w-[540px]">
-        <SheetHeader>
-          <SheetTitle>How can we help you?</SheetTitle>
+      <SheetContent className="w-[400px] sm:w-[540px] p-0">
+        <SheetHeader className="px-6 py-4 border-b">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <SheetTitle>How can we help you?</SheetTitle>
+          </div>
         </SheetHeader>
 
         <div className="flex flex-col h-[calc(100vh-200px)]">
-          <div className="flex-grow overflow-y-auto p-4 space-y-4">
+          <div className="flex-grow overflow-y-auto p-6 space-y-4">
+            {messages.length === 0 && (
+              <p className="text-center text-gray-500 text-sm">
+                Ask us anything about our products and services
+              </p>
+            )}
             {messages.map((message, i) => (
               <div
                 key={i}
@@ -76,38 +84,48 @@ export default function Chatbot() {
                 }`}
               >
                 <div
-                  className={`rounded-lg p-3 max-w-[80%] ${
+                  className={`rounded-lg p-4 max-w-[80%] ${
                     message.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                      : "bg-gray-100 dark:bg-gray-800"
                   }`}
                 >
                   {message.content}
                 </div>
               </div>
             ))}
+            {chatMutation.isPending && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                  Typing...
+                </div>
+              </div>
+            )}
           </div>
 
-          <div className="p-4 border-t flex gap-2">
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              className="resize-none"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-            />
-            <Button
-              size="icon"
-              onClick={handleSend}
-              disabled={chatMutation.isPending}
-            >
-              <Send className="h-4 w-4" />
-            </Button>
+          <div className="p-4 border-t bg-background">
+            <div className="flex gap-2">
+              <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                className="resize-none min-h-[80px]"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+              />
+              <Button
+                size="icon"
+                onClick={handleSend}
+                disabled={chatMutation.isPending || !input.trim()}
+                className="h-[80px] w-[80px]"
+              >
+                <Send className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </SheetContent>

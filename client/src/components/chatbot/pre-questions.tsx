@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Globe } from "lucide-react";
-import { Link } from "wouter";
+import { Input } from "@/components/ui/input";
+import { Globe, Send } from "lucide-react";
 import { useState } from "react";
 
 const predefinedQuestions = [
@@ -25,40 +25,82 @@ const predefinedQuestions = [
 
 export default function PreQuestionsChatbot() {
   const [isOpen, setIsOpen] = useState(true);
+  const [customQuestion, setCustomQuestion] = useState("");
 
   if (!isOpen) return null;
 
-  return (
-    <Card className="max-w-md mx-auto mb-24 shadow-lg">
-      <div className="p-4">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-            <span>Online</span>
-          </div>
-          <Globe className="h-4 w-4" />
-        </div>
+  const handleAskQuestion = (question: string) => {
+    const mainChatbot = document.getElementById('main-chatbot');
+    if (mainChatbot) {
+      (mainChatbot as HTMLButtonElement).click();
+      // The actual question handling will be done in the main chatbot component
+    }
+    setCustomQuestion("");
+  };
 
-        <div className="space-y-2">
-          <h3 className="font-medium mb-4">Ask questions about our products</h3>
-          {predefinedQuestions.map((question, index) => (
+  return (
+    <div className="max-w-3xl mx-auto px-4 mb-24">
+      <Card className="shadow-lg border-gray-200">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span className="text-sm font-medium">Online</span>
+              </div>
+              <Globe className="h-4 w-4 text-gray-500" />
+            </div>
             <Button
-              key={index}
-              variant="secondary"
-              className="w-full justify-start text-left h-auto py-4 px-6 text-sm"
-              onClick={() => {
-                // Handle question click - will be integrated with chatbot
-                const mainChatbot = document.getElementById('main-chatbot');
-                if (mainChatbot) {
-                  mainChatbot.click();
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsOpen(false)}
+              className="text-gray-500"
+            >
+              Minimize
+            </Button>
+          </div>
+
+          <h3 className="text-lg font-semibold mb-4">Ask questions about our products</h3>
+
+          <div className="space-y-3 mb-6">
+            {predefinedQuestions.map((question, index) => (
+              <Button
+                key={index}
+                variant="secondary"
+                className="w-full justify-start text-left h-auto py-3 px-4 text-sm hover:bg-gray-100"
+                onClick={() => handleAskQuestion(question.text)}
+              >
+                {question.text}
+              </Button>
+            ))}
+          </div>
+
+          <div className="flex gap-2">
+            <Input
+              placeholder="Type your question here..."
+              value={customQuestion}
+              onChange={(e) => setCustomQuestion(e.target.value)}
+              className="flex-grow"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && customQuestion.trim()) {
+                  handleAskQuestion(customQuestion);
                 }
               }}
+            />
+            <Button
+              size="icon"
+              onClick={() => {
+                if (customQuestion.trim()) {
+                  handleAskQuestion(customQuestion);
+                }
+              }}
+              disabled={!customQuestion.trim()}
             >
-              {question.text}
+              <Send className="h-4 w-4" />
             </Button>
-          ))}
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }
