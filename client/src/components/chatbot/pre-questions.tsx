@@ -25,13 +25,11 @@ const predefinedQuestions = [
 
 type PreQuestionsChatbotProps = {
   onAskQuestion?: (question: string) => void;
+  onMinimize?: () => void;
 };
 
-export default function PreQuestionsChatbot({ onAskQuestion }: PreQuestionsChatbotProps) {
-  const [isOpen, setIsOpen] = useState(true);
+export default function PreQuestionsChatbot({ onAskQuestion, onMinimize }: PreQuestionsChatbotProps) {
   const [customQuestion, setCustomQuestion] = useState("");
-
-  if (!isOpen) return null;
 
   const handleAskQuestion = (question: string) => {
     if (onAskQuestion) {
@@ -55,7 +53,7 @@ export default function PreQuestionsChatbot({ onAskQuestion }: PreQuestionsChatb
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsOpen(false)}
+              onClick={onMinimize}
               className="text-gray-500"
             >
               Minimize

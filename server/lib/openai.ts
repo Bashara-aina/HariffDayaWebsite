@@ -1,6 +1,5 @@
 import OpenAI from "openai";
 
-// the newest OpenAI model is "gpt-4o" which was released May 13, 2024
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const SYSTEM_PROMPT = `You are an AI assistant for Hariff DTE, a leading technology company specializing in power systems, digital transformation, and defense solutions. Answer questions professionally and concisely about our products and services.
@@ -15,7 +14,7 @@ Please format responses in a clear, professional manner.`;
 export async function getChatResponse(messages: Array<{ role: "user" | "assistant" | "system"; content: string }>) {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4-turbo-preview",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         ...messages.map(msg => ({
