@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { MessageCircle, Send } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { nanoid } from "nanoid";
@@ -12,6 +19,7 @@ type Message = {
 };
 
 export default function Chatbot() {
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const sessionId = useState(nanoid())[0];
@@ -41,71 +49,86 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 mb-24">
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200">
-        <div className="p-4 border-b">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full" />
-            <h2 className="text-lg font-semibold">How can we help you?</h2>
-          </div>
-        </div>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button
+          id="main-chatbot"
+          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg"
+          size="icon"
+          onClick={() => setIsOpen(true)}
+        >
+          <MessageCircle className="h-6 w-6" />
+        </Button>
+      </SheetTrigger>
 
-        <div className="h-[400px] overflow-y-auto p-4">
-          {messages.length === 0 && (
-            <p className="text-center text-gray-500 text-sm">
-              Ask us anything about our products and services
-            </p>
-          )}
-          {messages.map((message, i) => (
-            <div
-              key={i}
-              className={`mb-4 ${
-                message.role === "user" ? "text-right" : "text-left"
-              }`}
-            >
+      <SheetContent className="w-[400px] sm:w-[540px] p-0">
+        <SheetHeader className="px-6 py-4 border-b">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <SheetTitle>How can we help you?</SheetTitle>
+          </div>
+        </SheetHeader>
+
+        <div className="flex flex-col h-[calc(100vh-200px)]">
+          <div className="flex-grow overflow-y-auto p-6 space-y-4">
+            {messages.length === 0 && (
+              <p className="text-center text-gray-500 text-sm">
+                Ask us anything about our products and services
+              </p>
+            )}
+            {messages.map((message, i) => (
               <div
-                className={`inline-block rounded-lg px-4 py-2 max-w-[80%] ${
-                  message.role === "user"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-gray-100"
+                key={i}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                {message.content}
+                <div
+                  className={`rounded-lg p-4 max-w-[80%] ${
+                    message.role === "user"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-gray-100 dark:bg-gray-800"
+                  }`}
+                >
+                  {message.content}
+                </div>
               </div>
-            </div>
-          ))}
-          {chatMutation.isPending && (
-            <div className="text-left mb-4">
-              <div className="inline-block rounded-lg px-4 py-2 bg-gray-100">
-                Typing...
+            ))}
+            {chatMutation.isPending && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                  Typing...
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        <div className="p-4 border-t">
-          <div className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-            />
-            <Button
-              size="icon"
-              onClick={handleSend}
-              disabled={chatMutation.isPending || !input.trim()}
-            >
-              <Send className="h-4 w-4" />
-            </Button>
+          <div className="p-4 border-t bg-background">
+            <div className="flex gap-2">
+              <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                className="resize-none min-h-[80px]"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+              />
+              <Button
+                size="icon"
+                onClick={handleSend}
+                disabled={chatMutation.isPending || !input.trim()}
+                className="h-[80px] w-[80px]"
+              >
+                <Send className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 }
