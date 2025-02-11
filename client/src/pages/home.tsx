@@ -7,9 +7,9 @@ export default function Home() {
   return (
     <div>
       <Hero />
+      <Chatbot />
       <Features />
       <Solutions />
-      <Chatbot />
     </div>
   );
 }
