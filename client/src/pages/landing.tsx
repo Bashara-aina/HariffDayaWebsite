@@ -1,13 +1,28 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    // Start the fade-in effect after 2 seconds
+    const timer = setTimeout(() => {
+      setShowVideo(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden">
+    <div className="relative h-screen w-screen overflow-hidden bg-black">
       {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full">
+      <div 
+        className={`absolute inset-0 w-full h-full transition-opacity duration-[1500ms] ease-in-out ${
+          showVideo ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
         <iframe 
           className="w-full h-full scale-[1.5]"
           src="https://www.youtube.com/embed/tZY4XJVaKlc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=tZY4XJVaKlc&vq=hd720" 
