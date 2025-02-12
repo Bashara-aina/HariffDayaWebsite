@@ -10,17 +10,16 @@ export default function LandingPage() {
 
   useEffect(() => {
     // Delay showing content for smooth initial load
-    const contentTimer = setTimeout(() => {
-      //setShowContent(true);  Removed - content now always shown after delay
+    const timer = setTimeout(() => {
+      setIsVideoLoaded(true);
     }, 2000);
 
-    return () => clearTimeout(contentTimer);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleVideoLoad = () => {
     if (videoRef.current) {
       videoRef.current.play().catch(console.error);
-      setIsVideoLoaded(true);
     }
   };
 
@@ -49,10 +48,10 @@ export default function LandingPage() {
       </motion.div>
 
       {/* Content */}
-      <motion.div 
+      <motion.div
         className="relative z-10 flex h-full items-center justify-center text-white"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }} //Always animate to opacity 1 after 2s delay
+        animate={{ opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
       >
         <div className="max-w-4xl text-center p-6">
@@ -60,11 +59,12 @@ export default function LandingPage() {
             Innovating Indonesia's Future with Cutting-Edge Technology
           </h1>
           <p className="text-xl md:text-2xl mb-12 text-gray-200">
-            Leading provider of power systems, digital transformation, and defense solutions.
+            Leading provider of power systems, digital transformation, and
+            defense solutions.
           </p>
-          <Button 
-            size="lg" 
-            onClick={() => setLocation('/home')}
+          <Button
+            size="lg"
+            onClick={() => setLocation("/home")}
             className="text-lg px-8 py-6 bg-primary hover:bg-primary/90"
           >
             Masuk ke Perjalanan Kami
