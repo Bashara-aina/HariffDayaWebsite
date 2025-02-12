@@ -1,35 +1,20 @@
-import { useState } from "react";
 import { useLocation } from "wouter";
-import ReactPlayer from "react-player/youtube";
 import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
-  const [isVideoReady, setIsVideoReady] = useState(false);
 
   return (
     <div className="relative h-screen w-screen overflow-hidden">
       {/* Video Background */}
-      <div className="absolute inset-0">
-        <ReactPlayer
-          url="https://youtu.be/tZY4XJVaKlc"
-          playing
-          loop
-          muted
-          width="100%"
-          height="100%"
-          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-          config={{
-            playerVars: {
-              controls: 0,
-              showinfo: 0,
-              rel: 0,
-              modestbranding: 1,
-              playsinline: 1,
-            }
-          }}
-          onReady={() => setIsVideoReady(true)}
-          className="react-player"
+      <div className="absolute inset-0 w-full h-full">
+        <iframe 
+          className="w-full h-full scale-[1.5]"
+          src="https://www.youtube.com/embed/tZY4XJVaKlc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=tZY4XJVaKlc&vq=hd720" 
+          title="Background Video"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
         />
         <div className="absolute inset-0 bg-black/50" /> {/* Overlay */}
       </div>
