@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
@@ -10,7 +11,7 @@ export default function LandingPage() {
     // Start the fade-in effect after 2 seconds
     const timer = setTimeout(() => {
       setShowVideo(true);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -18,21 +19,26 @@ export default function LandingPage() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black">
       {/* Video Background */}
-      <div
-        className={`absolute inset-0 w-full h-full transition-opacity duration-[1500ms] ease-in-out ${
-          showVideo ? "opacity-100" : "opacity-0"
-        }`}
+      <motion.div
+        className="absolute inset-0 w-full h-full"
+        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
       >
-        <iframe
+        <motion.iframe
+          key={showVideo ? "visible" : "hidden"}
           className="w-full h-full scale-[1.5]"
           src="https://www.youtube.com/embed/tZY4XJVaKlc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=tZY4XJVaKlc&vq=hd720"
           title="Background Video"
           frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
         />
         <div className="absolute inset-0 bg-black/50" /> {/* Overlay */}
-      </div>
+      </motion.div>
 
       {/* Content */}
       <div className="relative z-10 flex h-full items-center justify-center text-white">

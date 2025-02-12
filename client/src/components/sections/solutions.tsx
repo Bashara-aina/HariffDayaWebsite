@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
+import { 
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import { Link } from "wouter";
 
@@ -14,14 +14,13 @@ const solutions = [
   {
     title: "Power Systems",
     image: "https://images.unsplash.com/photo-1463171379579-3fdfb86d6285",
-    description:
-      "Reliable and efficient power solutions for your infrastructure needs",
+    description: "Reliable and efficient power solutions for your infrastructure needs",
     features: [
       "Solar Panel Systems",
       "UPS Solutions",
       "VRLA Batteries",
-      "Power Management",
-    ],
+      "Power Management"
+    ]
   },
   {
     title: "Digital Transformation",
@@ -31,21 +30,20 @@ const solutions = [
       "Network Management",
       "IoT Integration",
       "System Monitoring",
-      "Data Analytics",
-    ],
+      "Data Analytics"
+    ]
   },
   {
     title: "Defense Solutions",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-    description:
-      "Advanced security and defense systems for critical infrastructure",
+    description: "Advanced security and defense systems for critical infrastructure",
     features: [
       "Security Systems",
       "Access Control",
       "Surveillance",
-      "Threat Detection",
-    ],
-  },
+      "Threat Detection"
+    ]
+  }
 ];
 
 export default function Solutions() {
@@ -57,8 +55,8 @@ export default function Solutions() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Comprehensive Solutions</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover our range of innovative solutions designed to meet the
-            evolving needs of modern businesses and organizations.
+            Discover our range of innovative solutions designed to meet the evolving 
+            needs of modern businesses and organizations.
           </p>
         </div>
 
@@ -80,12 +78,8 @@ export default function Solutions() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-8 text-white">
-              <h3 className="text-2xl font-bold mb-2">
-                {solutions[activeIndex].title}
-              </h3>
-              <p className="text-gray-200">
-                {solutions[activeIndex].description}
-              </p>
+              <h3 className="text-2xl font-bold mb-2">{solutions[activeIndex].title}</h3>
+              <p className="text-gray-200">{solutions[activeIndex].description}</p>
             </div>
           </motion.div>
 
