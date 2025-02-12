@@ -9,20 +9,9 @@ export default function LandingPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Preload the video immediately
-    if (videoRef.current) {
-      videoRef.current.load();
-      // Start playing immediately but keep it hidden
-      videoRef.current.play().catch(console.error);
-    }
-
     // Show video after exactly 2 seconds
     const timer = setTimeout(() => {
       setShowVideo(true);
-      // Ensure video is playing
-      if (videoRef.current && videoRef.current.paused) {
-        videoRef.current.play().catch(console.error);
-      }
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -39,12 +28,11 @@ export default function LandingPage() {
       >
         <video
           ref={videoRef}
-          className="w-full h-full object-cover scale-[1.5]"
+          className="w-full h-full object-cover scale-[1.2]"
           playsInline
           autoPlay
           muted
           loop
-          preload="auto"
         >
           <source src="/assets/background.mp4" type="video/mp4" />
         </video>
@@ -62,7 +50,7 @@ export default function LandingPage() {
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
             Innovating Indonesia's Future with Cutting-Edge Technology
           </h1>
-          <p className="text-xl md:text-2xl mb-12 text-gray-200">
+          <p className="text-lg md:text-2xl mb-12 text-gray-200">
             Leading provider of power systems, digital transformation, and
             defense solutions.
           </p>
