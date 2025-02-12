@@ -11,7 +11,7 @@ export default function LandingPage() {
     // Start the fade-in effect after 2 seconds
     const timer = setTimeout(() => {
       setShowVideo(true);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
