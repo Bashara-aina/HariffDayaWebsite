@@ -10,7 +10,7 @@ export default function LandingPage() {
     // Start the fade-in effect after 2 seconds
     const timer = setTimeout(() => {
       setShowVideo(true);
-    }, 2000);
+    }, 2600);
 
     return () => clearTimeout(timer);
   }, []);
@@ -18,14 +18,14 @@ export default function LandingPage() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black">
       {/* Video Background */}
-      <div 
+      <div
         className={`absolute inset-0 w-full h-full transition-opacity duration-[1500ms] ease-in-out ${
-          showVideo ? 'opacity-100' : 'opacity-0'
+          showVideo ? "opacity-100" : "opacity-0"
         }`}
       >
-        <iframe 
-          className="w-full h-full scale-[1.5]"
-          src="https://www.youtube.com/embed/tZY4XJVaKlc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=tZY4XJVaKlc&vq=hd720" 
+        <iframe
+          className="w-full h-full object-cover object-center transform-gpu scale-125 md:scale-110"
+          src="https://www.youtube.com/embed/tZY4XJVaKlc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=tZY4XJVaKlc&vq=hd720"
           title="Background Video"
           frameBorder="0"
           allow="autoplay; encrypted-media"
@@ -41,11 +41,12 @@ export default function LandingPage() {
             Innovating Indonesia's Future with Cutting-Edge Technology
           </h1>
           <p className="text-xl md:text-2xl mb-12 text-gray-200">
-            Leading provider of power systems, digital transformation, and defense solutions.
+            Leading provider of power systems, digital transformation, and
+            defense solutions.
           </p>
-          <Button 
-            size="lg" 
-            onClick={() => setLocation('/home')}
+          <Button
+            size="lg"
+            onClick={() => setLocation("/home")}
             className="text-lg px-8 py-6 bg-primary hover:bg-primary/90"
           >
             Masuk ke Perjalanan Kami
