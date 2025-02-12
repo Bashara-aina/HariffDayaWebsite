@@ -5,31 +5,36 @@ import { motion } from "framer-motion";
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Delay showing content for smooth initial load
+    // Preload the video immediately
+    if (videoRef.current) {
+      videoRef.current.load();
+      // Start playing immediately but keep it hidden
+      videoRef.current.play().catch(console.error);
+    }
+
+    // Show video after exactly 2 seconds
     const timer = setTimeout(() => {
-      setIsVideoLoaded(true);
+      setShowVideo(true);
+      // Ensure video is playing
+      if (videoRef.current && videoRef.current.paused) {
+        videoRef.current.play().catch(console.error);
+      }
     }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
-
-  const handleVideoLoad = () => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(console.error);
-    }
-  };
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black">
       {/* Video Background */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isVideoLoaded ? 1 : 0 }}
-        transition={{ duration: 2 }}
+        animate={{ opacity: showVideo ? 1 : 0 }}
+        transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full"
       >
         <video
@@ -40,7 +45,6 @@ export default function LandingPage() {
           muted
           loop
           preload="auto"
-          onLoadedData={handleVideoLoad}
         >
           <source src="/assets/background.mp4" type="video/mp4" />
         </video>
@@ -48,11 +52,11 @@ export default function LandingPage() {
       </motion.div>
 
       {/* Content */}
-      <motion.div
+      <motion.div 
         className="relative z-10 flex h-full items-center justify-center text-white"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        transition={{ duration: 1.5, delay: 0.5 }}
       >
         <div className="max-w-4xl text-center p-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
