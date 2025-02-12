@@ -18,7 +18,6 @@ export default function LandingPage() {
           muted
           width="100%"
           height="100%"
-          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
           config={{
             playerVars: {
               controls: 0,
@@ -26,12 +25,16 @@ export default function LandingPage() {
               rel: 0,
               modestbranding: 1,
               playsinline: 1,
+              iv_load_policy: 3, // Hide video annotations
+              fs: 0, // Disable fullscreen button
+              disablekb: 1, // Disable keyboard controls
+              enablejsapi: 0, // Disable JS API
             }
           }}
           onReady={() => setIsVideoReady(true)}
           className="react-player"
         />
-        <div className="absolute inset-0 bg-black/50" /> {/* Overlay */}
+        <div className="absolute inset-0 bg-black/50" /> {/* Dark overlay */}
       </div>
 
       {/* Content */}
