@@ -18,17 +18,19 @@ export default function LandingPage() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black">
       {/* Video Background */}
-      <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}>
-        <iframe 
-          className="w-full h-full scale-[1.5]"
-          src="https://www.youtube.com/embed/tZY4XJVaKlc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=tZY4XJVaKlc&vq=hd720" 
-          title="Background Video"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
-        <div className="absolute inset-0 bg-black/50" /> {/* Overlay */}
-      </div>
+      {isVideoLoaded && (
+        <div className="absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100">
+          <iframe 
+            className="w-full h-full scale-[1.5]"
+            src="https://www.youtube.com/embed/tZY4XJVaKlc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=tZY4XJVaKlc&vq=hd720" 
+            title="Background Video"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+          <div className="absolute inset-0 bg-black/50" /> {/* Overlay */}
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative z-10 flex h-full items-center justify-center text-white">
